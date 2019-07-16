@@ -1,0 +1,60 @@
+/*
+ * Connect the SD card to the following pins:
+ *
+ * SD Card | K210     |   K210 pin
+ *    D2       -
+ *    D3       SS          29
+ *    CMD      MOSI        28
+ *    VSS      GND         
+ *    VDD      3.3V 
+ *    CLK      SCK         27
+ *    VSS      GND
+ *    D0       MISO        26
+ *    D1       -
+ */
+// #include <Arduino.h>
+// #include <FS.h>
+#include "SD.h"
+#include "SPI.h"
+
+SPIClass spi0(SPI0, 27, 26, 28, 29);
+Sd2Card card(spi0);
+
+
+
+
+void setup(){
+    Serial.begin(115200);
+    if(!SD.begin()){
+        Serial.println("Card Mount Failed");
+        return;
+    }
+    uint8_t cardType = SD.cardType();
+
+    if(cardType == CARD_NONE){
+        Serial.println("No SD card attached");
+        return;
+    }
+
+    Serial.print("SD Card Type: ");
+    if(cardType == CARD_MMC){
+        Serial.println("MMC");
+    } else if(cardType == CARD_SD){
+        Serial.println("SDSC");
+    } else if(cardType == CARD_SDHC){
+        Serial.println("SDHC");
+    } else {
+        Serial.println("UNKNOWN");
+    }
+
+    uint64_t cardSize = SD.cardSize() / (1024 * 1024);
+    Serial.printf("SD Card Size: %lluMB\n", cardSize);
+
+
+    Serial.printf("Total space: %lluMB\n", SD.totalBytes() / (1024 * 1024));
+    Serial.printf("Used space: %lluMB\n", SD.usedBytes() / (1024 * 1024));
+}
+
+void loop(){
+
+}
