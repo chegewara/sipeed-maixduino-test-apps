@@ -1,0 +1,10 @@
+{
+    "terminal.integrated.env.windows": {
+        "PATH": "C:\\Users\\darek\\.platformio\\penv\\Scripts;C:\\Users\\darek\\.platformio\\penv;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Program Files (x86)\\Intel\\iCLS Client\\;C:\\Program Files\\Intel\\iCLS Client\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\WINDOWS\\System32\\OpenSSH\\;d:\\Program Files\\Microsoft VS Code\\bin;d:\\Program Files\\Git\\cmd;E:\\AWSCLI\\bin\\;C:\\Program Files\\dotnet\\;C:\\Program Files\\CMake\\bin;C:\\Users\\darek\\AppData\\Local\\Microsoft\\WindowsApps;D:\\esp32_master\\mingw32\\bin;;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Program Files (x86)\\Intel\\iCLS Client\\;C:\\Program Files\\Intel\\iCLS Client\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\WINDOWS\\System32\\OpenSSH\\;d:\\Program Files\\Microsoft VS Code\\bin;d:\\Program Files\\Git\\cmd;E:\\AWSCLI\\bin\\;C:\\Program Files\\dotnet\\;C:\\Program Files\\CMake\\bin;C:\\Users\\darek\\AppData\\Local\\Microsoft\\WindowsApps;D:\\esp32_master\\mingw32\\bin;",
+        "PLATFORMIO_CALLER": "vscode"
+    },
+    "files.associations": {
+        "devices.h": "c",
+        "fpioa.h": "c"
+    }
+}
