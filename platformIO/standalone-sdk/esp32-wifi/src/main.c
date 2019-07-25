@@ -16,6 +16,7 @@
 #include <syslog.h>
 #include <fpioa.h>
 #include <sleep.h>
+#include <bsp.h>
 
 #include "esp32_spi.h"
 #include "esp32_spi_io.h"
@@ -30,6 +31,7 @@
 #define SSID "sipeed"
 #define PASS "12345678"
 
+static uint8_t read_buf[0xffff] = {0};
 
 static void init_spi()
 {
@@ -79,21 +81,65 @@ static void test_connection()
     printf("IP: %s\r\n", str_ip);
 }
 
+static void test_socket()
+{
+    _DEBUG();
+    uint8_t socket = connect_server_port("dl.sipeed.com", 80);
+    if(socket == 0xff)
+        return;
+
+    int status = esp32_spi_socket_status(socket);
+    printf("open socket status: %s\r\n", socket_enum_to_str(status));
+    #define LEN 1024 // its max buffer length with which esp32 can read fast enough from internet
+
+    if(status == SOCKET_ESTABLISHED)
+    {
+        char* buf = "GET /MAIX/MaixPy/assets/Alice.jpg HTTP/1.1\r\nHost: dl.sipeed.com\r\ncache-control: no-cache\r\n\r\n";
+        uint32_t len = esp32_spi_socket_write(socket, (uint8_t*)buf, strlen(buf)+1);
+        printf("len value: %d\r\n", len);
+        int total = 0;
+
+        msleep(300); // small delay required between write and read
+
+        if(len > 0)
+        {
+            uint16_t len1 = 0;            
+            uint8_t tmp_buf[LEN] = {0};
+            do{
+                len = esp32_spi_socket_available(socket);
+                printf("bytes available %d\r\n", len);
+                len1 = esp32_spi_socket_read(socket, &tmp_buf[0], len > LEN ? LEN:len);
+                strncat((char*)read_buf, (char*)tmp_buf, len1);
+                total += len1;
+                status = esp32_spi_socket_status(socket);
+                msleep(65);
+           }while(len > LEN && status != -1);
+
+            printf("total data read len: %d\r\n", total);
+        }
+    }
+
+    status = esp32_spi_socket_close(socket);
+    printf("close socket status: %s\r\n", socket_enum_to_str(status));
+}
+
 int main(void)
 {
-    LOGI(__func__, "Kendryte "__DATE__ " " __TIME__);
-    LOGI(__func__, "ESP32 test app");
+    LOGI(__func__, "Kendryte "__DATE__ " " __TIME__ "\r\n");
+    LOGI(__func__, "ESP32 test app\r\n");
 
     init_spi();
     /* Get esp32 firmware version */
     printf("version: %s\r\n", esp32_spi_firmware_version());
 
     scan_WiFi();
-    connect_AP(SSID, PASS);
+    while(connect_AP(SSID, PASS) != 0);
+
     test_connection();
 
+    test_socket();
     while(1)
     {
-        usleep(1000 * 1000);
+        msleep(1000);
     }
 }
